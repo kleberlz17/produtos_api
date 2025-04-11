@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record ProdutoDTO(
-		// CONTRATO DE COMO O PRODUTO DEVE ENTRAR OU SAIR DA API!!!
+		//  VALIDA COMO O PRODUTO DEVE ENTRAR OU SAIR DA API!!!
 		UUID id,
 		
 		@NotBlank(message = "campo obrigatório")
