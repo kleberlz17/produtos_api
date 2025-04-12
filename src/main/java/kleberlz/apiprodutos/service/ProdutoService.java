@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kleberlz.apiprodutos.domain.model.Produto;
 import kleberlz.apiprodutos.repository.ProdutoRepository;
+import kleberlz.apiprodutos.validator.ProdutoValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,9 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ProdutoService {
 
 	private final ProdutoRepository produtoRepository;
+	private final ProdutoValidator produtoValidator;
 
 	public Produto salvar(Produto produto) {
 		log.info("Salvando produto: {}", produto.getNome());
+		produtoValidator.validar(produto);
 		return produtoRepository.save(produto);
 	}
 
@@ -57,6 +60,7 @@ public class ProdutoService {
 			throw new IllegalArgumentException("Pra atualizar é necessário que o produto esteja cadastrado na base");
 		}
 		log.info("Atualizando produto com ID: {}", produto.getId());
+		produtoValidator.validar(produto);
 		produtoRepository.save(produto);
 	}
 

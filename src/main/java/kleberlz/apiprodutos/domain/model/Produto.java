@@ -3,8 +3,11 @@ package kleberlz.apiprodutos.domain.model;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // Criar Construtor sem argumentos(vazio)(obrigatório para JPA)
 @AllArgsConstructor // Criar Construtor com todos os atributos
 @Table(name = "produtos") // Evitar conflitos
+@EntityListeners(AuditingEntityListener.class)
 public class Produto {
 
 	@Id
