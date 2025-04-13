@@ -52,7 +52,7 @@ public class ProdutoController implements GenericController {
 
 	@DeleteMapping("{id}")
 	@Operation(summary = "Deletar", description = "Deleta um produto existente.")
-	public ResponseEntity<Void> deletar(@PathVariable("idProduto") String id) {
+	public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
 		log.info("Produto com ID {} deletado com sucesso", id);
 		var idProduto = UUID.fromString(id);
 		Optional<Produto> produtoOptional = produtoService.obterPorId(idProduto);
@@ -78,7 +78,7 @@ public class ProdutoController implements GenericController {
 	}
 	@PutMapping("{id}")
 	@Operation(summary = "Atualizar", description = "Atualiza um produto existente")
-	public ResponseEntity<Void> atualizar(@PathVariable("idProduto") String id, @RequestBody @Valid ProdutoDTO dto) {
+	public ResponseEntity<Void> atualizar(@PathVariable("id") String id, @RequestBody @Valid ProdutoDTO dto) {
 		
 		var idProduto = UUID.fromString(id);
 		Optional<Produto> produtoOptional = produtoService.obterPorId(idProduto);
