@@ -10,6 +10,7 @@ import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import kleberlz.apiprodutos.domain.model.Produto;
+import kleberlz.apiprodutos.exceptions.RegistroDuplicadoException;
 import kleberlz.apiprodutos.repository.ProdutoRepository;
 import kleberlz.apiprodutos.validator.ProdutoValidator;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,13 @@ public class ProdutoService {
 
 	public Produto salvar(Produto produto) {
 		log.info("Salvando produto: {}", produto.getNome());
+		
+		// Verificando se o produto já existe no banco de dados..
+		Optional<Produto> produtoExistente = produtoRepository.findByNomeIgnoreCase(produto.getNome());
+		if(produtoExistente.isPresent()) {
+			throw new RegistroDuplicadoException("Produto já cadastrado");
+		}
+		
 		produtoValidator.validar(produto);
 		return produtoRepository.save(produto);
 	}

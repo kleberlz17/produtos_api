@@ -2,6 +2,7 @@ package kleberlz.apiprodutos.exceptions;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,6 +42,12 @@ public class GlobalExceptionHandler {
 				.stream().map(erro -> new ErroCampo(erro.getField(), erro.getDefaultMessage())).toList();
 		
 		return ErroResposta.erroValidacao(erros);
+	}
+	// Quando enviarem ID errado(ex: abcdef), o sistema vai retornar a mensagem abaixo.
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ErroResposta> handleIllegalArgumentException(IllegalArgumentException exception) {
+		var erro = ErroResposta.respostaPadrao("ID inválido. O formato deve ser UUID.");
+		return ResponseEntity.badRequest().body(erro);
 	}
 
 	

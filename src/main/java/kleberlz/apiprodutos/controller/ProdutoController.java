@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kleberlz.apiprodutos.domain.model.Produto;
@@ -39,9 +42,16 @@ public class ProdutoController implements GenericController {
 	private final ProdutoMapper produtoMapper;
 
 	@PostMapping
+	@PreAuthorize("hasRole('GERENTE')")
 	@Operation(summary = "Salvar", description = "Salva um novo produto.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "201", description = "Cadastrado com sucesso"),
+		@ApiResponse(responseCode = "422", description = "Erro de validação."),
+		@ApiResponse(responseCode = "409", description = "Produto já cadastrado.")
+	})
 	public ResponseEntity<Object> salvar(@RequestBody @Valid ProdutoDTO dto) {
-		log.info("Produto cadastrado com sucesso: {}", dto.nome());
+		log.info("Produto '{}' cadastrado com sucesso. Preço: {}, Descrição: {}",
+				dto.nome(), dto.preco(), dto.descricao());
 
 		Produto produto = produtoMapper.toEntity(dto);
 		produtoService.salvar(produto);
@@ -51,9 +61,14 @@ public class ProdutoController implements GenericController {
 	}
 
 	@DeleteMapping("{id}")
+	@PreAuthorize("hasRole('GERENTE')")
 	@Operation(summary = "Deletar", description = "Deleta um produto existente.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "204", description = "Deletado com sucesso."),
+		@ApiResponse(responseCode = "404", description = "Produto não encontrado.")
+	})
 	public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
-		log.info("Produto com ID {} deletado com sucesso", id);
+		log.info("Deletando produto com ID: {}", id);
 		var idProduto = UUID.fromString(id);
 		Optional<Produto> produtoOptional = produtoService.obterPorId(idProduto);
 
@@ -67,7 +82,11 @@ public class ProdutoController implements GenericController {
 	}
 	
 	@GetMapping
+	@PreAuthorize("HasAnyRole('OPERADOR', 'GERENTE')")
 	@Operation(summary = "Pesquisar", description = "Realiza pesquisa de produtos por parametros.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Sucesso")
+	})
 	public ResponseEntity<List<ProdutoDTO>> pesquisar(
 			@RequestParam(value = "nome", required = false) String nome) {
 		
@@ -77,7 +96,13 @@ public class ProdutoController implements GenericController {
 		return ResponseEntity.ok(lista);
 	}
 	@PutMapping("{id}")
+	@PreAuthorize("HasRole('GERENTE')")
 	@Operation(summary = "Atualizar", description = "Atualiza um produto existente")
+	@ApiResponses({
+		@ApiResponse(responseCode = "204", description = "Atualizado com sucesso."),
+		@ApiResponse(responseCode = "404", description = "Produto não encontrado."),
+		@ApiResponse(responseCode = "409", description = "Produto já cadastrado.")
+	})
 	public ResponseEntity<Void> atualizar(@PathVariable("id") String id, @RequestBody @Valid ProdutoDTO dto) {
 		
 		var idProduto = UUID.fromString(id);
