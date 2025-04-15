@@ -68,7 +68,7 @@ class ProdutoServiceTest {
 	@Test
 	void deveObterProdutoPorId() {
 		UUID id = UUID.randomUUID();
-		Produto produto = new Produto(UUID.randomUUID(), "Monitor", new BigDecimal("1200.00"), "Samsung");
+		Produto produto = new Produto(id, "Monitor", new BigDecimal("1200.00"), "Samsung");
 		
 		when(produtoRepository.findById(id)).thenReturn(Optional.of(produto));
 		

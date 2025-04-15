@@ -19,7 +19,7 @@ public record ProdutoDTO(
 		BigDecimal preco,
 		
 		@NotBlank(message = "campo obrigatório")
-		@Size(max = 100, min = 20, message = "campo fora do tamanho padrão")
+		@Size(max = 100, min = 5, message = "campo fora do tamanho padrão")
 		String descricao) {
 
 }

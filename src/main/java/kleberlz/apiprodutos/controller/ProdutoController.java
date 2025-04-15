@@ -82,7 +82,7 @@ public class ProdutoController implements GenericController {
 	}
 	
 	@GetMapping
-	@PreAuthorize("HasAnyRole('OPERADOR', 'GERENTE')")
+	@PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
 	@Operation(summary = "Pesquisar", description = "Realiza pesquisa de produtos por parametros.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Sucesso")
@@ -96,7 +96,7 @@ public class ProdutoController implements GenericController {
 		return ResponseEntity.ok(lista);
 	}
 	@PutMapping("{id}")
-	@PreAuthorize("HasRole('GERENTE')")
+	@PreAuthorize("hasRole('GERENTE')")
 	@Operation(summary = "Atualizar", description = "Atualiza um produto existente")
 	@ApiResponses({
 		@ApiResponse(responseCode = "204", description = "Atualizado com sucesso."),
