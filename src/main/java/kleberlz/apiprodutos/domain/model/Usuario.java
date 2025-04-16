@@ -1,6 +1,11 @@
 package kleberlz.apiprodutos.domain.model;
 
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+
+import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,5 +31,10 @@ public class Usuario {
 
 	@Column
 	private String senha;
+	
+	@Type(ListArrayType.class)
+	@Column(name = "roles", columnDefinition = "varchar[]")
+	private List<String> roles;
+	
 
 }
