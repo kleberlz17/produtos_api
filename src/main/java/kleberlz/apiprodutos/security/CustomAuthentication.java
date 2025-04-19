@@ -20,6 +20,7 @@ public class CustomAuthentication implements Authentication {
 	private final Usuario usuario;
 	
 	public Collection<GrantedAuthority> getAuthorities() {
+		//Pega as roles do Usuario, mapeia elas pro SimpleGrantedAuthority
 		return this.usuario
 				.getRoles()
 				.stream()
