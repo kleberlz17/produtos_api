@@ -19,12 +19,13 @@ public class CustomAuthentication implements Authentication {
 	
 	private final Usuario usuario;
 	
+	@Override
 	public Collection<GrantedAuthority> getAuthorities() {
 		//Pega as roles do Usuario, mapeia elas pro SimpleGrantedAuthority
 		return this.usuario
 				.getRoles()
 				.stream()
-				.map(SimpleGrantedAuthority::new) //Chama construtor pra remover a ROLE.
+				.map(role -> new SimpleGrantedAuthority(role.getNome())) //Chama construtor pra remover a ROLE.
 				.collect(Collectors.toList());
 	}
 

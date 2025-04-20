@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+
 public record ProdutoDTO(
 		//  VALIDA COMO O PRODUTO DEVE ENTRAR OU SAIR DA API!!!
 		UUID id,

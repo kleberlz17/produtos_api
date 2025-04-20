@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kleberlz.apiprodutos.domain.model.Usuario;
 import kleberlz.apiprodutos.repository.UsuarioRepository;
-
+// SOMENTE TESTES UNITÁRIOS AQUI.// Testa sem envolver o banco de dados, teste isolado.
 class UsuarioServiceTest {
 	
 	@InjectMocks

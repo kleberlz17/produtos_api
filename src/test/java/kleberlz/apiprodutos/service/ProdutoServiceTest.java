@@ -25,7 +25,7 @@ import kleberlz.apiprodutos.domain.model.Produto;
 import kleberlz.apiprodutos.exceptions.RegistroDuplicadoException;
 import kleberlz.apiprodutos.repository.ProdutoRepository;
 import kleberlz.apiprodutos.validator.ProdutoValidator;
-//SOMENTE TESTES UNITÁRIOS AQUI
+//SOMENTE TESTES UNITÁRIOS AQUI//Testa sem envolver o banco de dados, teste isolado.
 class ProdutoServiceTest {
 	
 	@Mock

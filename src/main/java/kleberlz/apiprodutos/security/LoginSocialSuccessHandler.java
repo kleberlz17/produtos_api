@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kleberlz.apiprodutos.domain.model.Role;
 import kleberlz.apiprodutos.domain.model.Usuario;
 import kleberlz.apiprodutos.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,13 @@ public class LoginSocialSuccessHandler extends SavedRequestAwareAuthenticationSu
 		usuario.setEmail(email);
 		usuario.setLogin(ObterLoginApartirEmail(email));
 		usuario.setSenha(SENHA_PADRAO);
-		usuario.setRoles(List.of("OPERADOR"));
+		
+		//CRIAR NOVA ROLE. ESSA É A ROLE PADRÃO DE NOVOS USUARIOS.
+		Role operadorRole = new Role();
+		operadorRole.setNome("OPERADOR");
+		
+		//Define a lista de roles do usuário com a nova Role
+		usuario.setRoles(List.of(operadorRole));
 		
 		usuarioService.salvar(usuario);
 		return usuario;
