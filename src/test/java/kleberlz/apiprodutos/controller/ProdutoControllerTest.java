@@ -31,7 +31,7 @@ class ProdutoControllerTest {
 	@Test
 	void deveCriarProdutoComSucesso() throws Exception {
 		UUID id = UUID.randomUUID();
-		ProdutoDTO produtoDTO = new ProdutoDTO(id, "Monitor", new BigDecimal("1299.99"), "Monitor 4K UltraWide de altíssima resolução. ");
+		ProdutoDTO produtoDTO = new ProdutoDTO(id, "Monitor", new BigDecimal("1299.99"), "Monitor 4K UltraWide com HDR e resolução 3840x1600.");
 		
 		mockMvc.perform(post("/produtos")
 				.contentType(MediaType.APPLICATION_JSON)

@@ -51,9 +51,10 @@ public class ProdutoController implements GenericController {
 	})
 	public ResponseEntity<Object> salvar(@RequestBody @Valid ProdutoDTO dto) {
 		log.info("Produto '{}' cadastrado com sucesso. Preço: {}, Descrição: {}",
-				dto.nome(), dto.preco(), dto.descricao());
+				dto.getNome(), dto.getPreco(), dto.getDescricao());
 
 		Produto produto = produtoMapper.toEntity(dto);
+		log.info("Testando" + produto.toString());
 		produtoService.salvar(produto);
 
 		URI location = gerarHeaderLocation(produto.getId());
@@ -113,9 +114,9 @@ public class ProdutoController implements GenericController {
 		}
 		
 		var produto = produtoOptional.get();
-		produto.setNome(dto.nome());
-		produto.setPreco(dto.preco());
-		produto.setDescricao(dto.descricao());
+		produto.setNome(dto.getNome());
+		produto.setPreco(dto.getPreco());
+		produto.setDescricao(dto.getDescricao());
 		
 		produtoService.atualizar(produto);
 		
